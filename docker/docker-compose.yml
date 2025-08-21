@@ -1,0 +1,127 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Databases
+  auth-db:
+    image: postgres:15
+    container_name: legacykeep-auth-db
+    environment:
+      POSTGRES_DB: auth_db
+      POSTGRES_USER: legacykeep
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - auth_data:/var/lib/postgresql/data
+    networks:
+      - legacykeep-network
+
+  user-db:
+    image: postgres:15
+    container_name: legacykeep-user-db
+    environment:
+      POSTGRES_DB: user_db
+      POSTGRES_USER: legacykeep
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"
+    volumes:
+      - user_data:/var/lib/postgresql/data
+    networks:
+      - legacykeep-network
+
+  family-db:
+    image: postgres:15
+    container_name: legacykeep-family-db
+    environment:
+      POSTGRES_DB: family_db
+      POSTGRES_USER: legacykeep
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5434:5432"
+    volumes:
+      - family_data:/var/lib/postgresql/data
+    networks:
+      - legacykeep-network
+
+  story-db:
+    image: postgres:15
+    container_name: legacykeep-story-db
+    environment:
+      POSTGRES_DB: story_db
+      POSTGRES_USER: legacykeep
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5435:5432"
+    volumes:
+      - story_data:/var/lib/postgresql/data
+    networks:
+      - legacykeep-network
+
+  media-db:
+    image: postgres:15
+    container_name: legacykeep-media-db
+    environment:
+      POSTGRES_DB: media_db
+      POSTGRES_USER: legacykeep
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5436:5432"
+    volumes:
+      - media_data:/var/lib/postgresql/data
+    networks:
+      - legacykeep-network
+
+  notification-db:
+    image: postgres:15
+    container_name: legacykeep-notification-db
+    environment:
+      POSTGRES_DB: notification_db
+      POSTGRES_USER: legacykeep
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5437:5432"
+    volumes:
+      - notification_data:/var/lib/postgresql/data
+    networks:
+      - legacykeep-network
+
+  # MongoDB for Chat Service
+  chat-db:
+    image: mongo:7
+    container_name: legacykeep-chat-db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: legacykeep
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: chat_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - chat_data:/data/db
+    networks:
+      - legacykeep-network
+
+  # Redis for Caching
+  redis:
+    image: redis:7-alpine
+    container_name: legacykeep-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - legacykeep-network
+
+volumes:
+  auth_data:
+  user_data:
+  family_data:
+  story_data:
+  media_data:
+  notification_data:
+  chat_data:
+  redis_data:
+
+networks:
+  legacykeep-network:
+    driver: bridge
