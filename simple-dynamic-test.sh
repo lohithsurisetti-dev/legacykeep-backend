@@ -227,3 +227,9 @@ SELECT 'audit_logs', COUNT(*), 0, 0 FROM audit_logs;
 "
 
 print_status "SUCCESS" "🎉 Simple Dynamic Authentication Test Complete!"
+
+
+
+
+
+
